@@ -18,13 +18,9 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
-    "@popperjs/core": "^2.11.8",
-    "apexcharts": "^3.53.0",
     "bootstrap": "^5.3.3",
-    "chart.js": "^4.4.4",
     "ng-apexcharts": "^1.12.0",
     "ng-recaptcha": "^13.2.1",
-    "ng2-charts": "^6.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

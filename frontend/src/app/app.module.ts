@@ -36,7 +36,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     FormsModule,
     HttpClientModule,
     RecaptchaModule,
-    NgApexchartsModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
