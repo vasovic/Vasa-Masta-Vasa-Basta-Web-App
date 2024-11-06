@@ -1,0 +1,130 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="">
+      <img src="assets/logo4.png" alt="logo" width="200" height="50" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          Registrujte se
+        </div>
+
+        <div class="card-body">
+          <form (ngSubmit)="registracija()" #registrationForm="ngForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Ime*</label>
+              <input type="text" class="form-control" id="name" name="ime" [(ngModel)]="ime" required placeholder="Unesite ime">
+              <div *ngIf="registrationForm.submitted && !ime" class="text-danger">
+                Ime je obavezno.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="surname" class="form-label">Prezime*</label>
+              <input type="text" class="form-control" id="surname" name="prezime" [(ngModel)]="prezime" required placeholder="Unesite prezime">
+              <div *ngIf="registrationForm.submitted && !prezime" class="text-danger">
+                Prezime je obavezno.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">Korisničko ime*</label>
+              <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username" required placeholder="Unesite korisničko ime">
+              <div *ngIf="registrationForm.submitted && !username" class="text-danger">
+                Korisničko ime je obavezno.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Lozinka*</label>
+              <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required (input)="validatePassword(password)" placeholder="Unesite lozinku">
+              <div *ngIf="registrationForm.submitted && !password" class="text-danger">
+                Lozinka је obavezna i mora imati od 6 do 10 karaktera, bar jedno veliko slovo, tri mala slova, jedan broj i jedan specijalni karakter i mora počinjati slovom!
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email*</label>
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" required placeholder="Unesite email">
+              <div *ngIf="registrationForm.submitted && !email" class="text-danger">
+                Unesite validan email.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Adresa*</label>
+              <input type="text" class="form-control" id="address" name="adresa" [(ngModel)]="adresa" required placeholder="Unesite adresu">
+              <div *ngIf="registrationForm.submitted && !adresa" class="text-danger">
+                Adresa je obavezna.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Broj telefona*</label>
+              <input type="tel" class="form-control" id="phone" name="telefon" [(ngModel)]="telefon" required placeholder="Unesite broj telefona">
+              <div *ngIf="registrationForm.submitted && !telefon" class="text-danger">
+                Broj telefona je obavezan.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="gender" class="form-label">Pol*</label>
+              <div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="male" name="pol" [(ngModel)]="pol" value="Muški" required>
+                  <label class="form-check-label" for="male">Muški</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="female" name="pol" [(ngModel)]="pol" value="Ženski" required>
+                  <label class="form-check-label" for="female">Ženski</label>
+                </div>
+              </div>
+              <div *ngIf="registrationForm.submitted && !pol" class="text-danger">
+                Pol je obavezan.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="creditCard" class="form-label">Broj kreditne kartice*</label>
+              <input type="text" class="form-control" id="creditCard" name="kartica" [(ngModel)]="kartica" required (input)="determineCardType()" placeholder="Unesite broj kreditne kartice">
+              <div *ngIf="registrationForm.submitted && !kartica" class="text-danger">
+                Broj kreditne kartice je obavezan.
+              </div>
+              <div *ngIf="registrationForm.submitted && kartica && !cardIconUrl" class="text-danger">
+                Unesite validan broj kreditne kartice.
+              </div>
+            </div>
+
+            <div *ngIf="cardIconUrl">
+              <img [src]="cardIconUrl" alt="Card Icon" style="max-width: 50px; height: auto;">
+            </div>
+
+            <div class="mb-3">
+              <label for="picture" class="form-label">Otpremite sliku</label>
+              <input type="file" class="form-control" id="picture" (change)="onFileChange($event)">
+            </div>
+
+            <!-- Display the uploaded image -->
+            <div *ngIf="uploadedImageUrl">
+              <img [src]="uploadedImageUrl" alt="Uploaded Picture" style="max-width: 100%; height: auto;">
+            </div>
+
+            <div [hidden]="captcha">
+              <re-captcha (resolved)="resolved($event)" siteKey="6LeyJEoqAAAAAAd9ViMBol5BLrQqNm0Md-QuYMGe"></re-captcha>
+            </div>
+
+            <div [hidden]="!captcha">
+              <button type="submit" class="btn btn-success w-100">Registrujte se</button>
+            </div>
+
+          </form>
+
+          <!-- Display the error message -->
+          <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="">
+      <img src="assets/logo4.png" alt="logo"  width="200" height="50" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          Promena lozinke
+        </div>
+
+        <div class="card-body">
+          <div *ngIf="error" class="alert alert-danger">
+            {{ error }}
+          </div>
+          <form (ngSubmit)="promenaLozinke()" #passwordForm="ngForm">
+            <div class="mb-3">
+              <label for="oldPassword" class="form-label">Stara lozinka*</label>
+              <input type="password" class="form-control" id="oldPassword" name="oldPassword" [(ngModel)]="oldPassword" required placeholder="Unesite staru lozinku">
+              <div *ngIf="passwordForm.submitted && !oldPassword" class="text-danger">
+                Stara lozinka je obavezna.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">Nova lozinka*</label>
+              <input type="password" class="form-control" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required (input)="validatePassword(newPassword)" placeholder="Unesite novu lozinku">
+              <div *ngIf="passwordForm.submitted && !newPassword" class="text-danger">
+                Nova lozinka је obavezna i mora imati od 6 do 10 karaktera, bar jedno veliko slovo, tri mala slova, jedan broj i jedan specijalni karakter i mora počinjati slovom!
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Potvrdite lozinku*</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required placeholder="Potvrdite novu lozinku">
+              <div *ngIf="passwordForm.submitted && !confirmPassword" class="text-danger">
+                Potvrdite novu lozinku.
+              </div>
+              <div *ngIf="passwordForm.submitted && newPassword !== confirmPassword" class="text-danger">
+                Lozinke se ne poklapaju.
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!passwordForm.valid">Promeni lozinku</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

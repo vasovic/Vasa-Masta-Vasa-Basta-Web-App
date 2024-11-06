@@ -1,0 +1,153 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="assets/logo4.png" alt="logo"  width="200" height="50" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Log in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/registracija">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <!-- Section Title -->
+  <h2 class="text-center mb-4 section-title">Statistika</h2>
+  <div class="divider mx-auto mb-5"></div>
+
+  <div class="row g-4">
+    <!-- Total Decorated Gardens -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 hover-effect" style="background: linear-gradient(135deg, #d4edda, #c3e6cb); color: #155724; border-radius: 15px;">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-tree-fill display-3"></i>
+          </div>
+          <h5 class="card-title">Ukupno dekorisanih bašta</h5>
+          <p class="card-text fs-2 fw-bold">{{ totalDecoratedGardens }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Total Registered Owners -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 hover-effect" style="background: linear-gradient(135deg, #c3e6cb, #b1dfbb); color: #155724; border-radius: 15px;">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-person-fill display-3"></i>
+          </div>
+          <h5 class="card-title">Ukupno registrovanih vlasnika</h5>
+          <p class="card-text fs-2 fw-bold">{{ totalRegisteredOwners }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Total Registered Decorators -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 hover-effect" style="background: linear-gradient(135deg, #b1dfbb, #a8d5a2); color: #155724; border-radius: 15px;">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-brush-fill display-3"></i>
+          </div>
+          <h5 class="card-title">Ukupno registrovanih dekoratera</h5>
+          <p class="card-text fs-2 fw-bold">{{ totalRegisteredDecorators }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Jobs in the Last 24 Hours -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 hover-effect" style="background: linear-gradient(135deg, #a8d5a2, #98df8a); color: #155724; border-radius: 15px;">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-clock-fill display-3"></i>
+          </div>
+          <h5 class="card-title">Broj poslova u poslednjih 24 časa</h5>
+          <p class="card-text fs-2 fw-bold">{{ jobsInLast24Hours }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Jobs in the Last 7 Days -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 hover-effect" style="background: linear-gradient(135deg, #98df8a, #88d378); color: #155724; border-radius: 15px;">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-calendar-week-fill display-3"></i>
+          </div>
+          <h5 class="card-title">Broj poslova u poslednjih 7 dana</h5>
+          <p class="card-text fs-2 fw-bold">{{ jobsInLast7Days }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Jobs in the Last 30 Days -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 hover-effect" style="background: linear-gradient(135deg, #88d378, #78c66e); color: #155724; border-radius: 15px;">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-calendar-month-fill display-3"></i>
+          </div>
+          <h5 class="card-title">Broj poslova u poslednjih 30 dana</h5>
+          <p class="card-text fs-2 fw-bold">{{ jobsInLast30Days }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4 section-title">Naše firme:</h2>
+  <div class="divider mx-auto mb-5"></div>
+
+  <!-- Search form -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Pretraži po nazivu" [(ngModel)]="searchNaziv">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Pretraži po adresi" [(ngModel)]="searchAdresa">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-success w-100" (click)="search()">Pretraži</button>
+    </div>
+  </div>
+
+  <!-- Firm table with sorting -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th (click)="sortBy('naziv')" [class.active]="sortedBy === 'naziv'">
+          Naziv firme
+          <i *ngIf="sortOrder === 'asc' && sortedBy === 'naziv'" class="bi bi-caret-up-fill"></i>
+          <i *ngIf="sortOrder === 'desc' && sortedBy === 'naziv'" class="bi bi-caret-down-fill"></i>
+        </th>
+        <th (click)="sortBy('adresa')" [class.active]="sortedBy === 'adresa'">
+          Adresa
+          <i *ngIf="sortOrder === 'asc' && sortedBy === 'adresa'" class="bi bi-caret-up-fill"></i>
+          <i *ngIf="sortOrder === 'desc' && sortedBy === 'adresa'" class="bi bi-caret-down-fill"></i>
+        </th>
+        <th>Trenutno angažovani dekorateri</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let firma of filteredFirme">
+        <td>{{ firma.naziv }}</td>
+        <td>{{ firma.adresa }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let dekorater of firma.dekorateriDetails">{{ dekorater?.ime }} {{ dekorater?.prezime }}</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+

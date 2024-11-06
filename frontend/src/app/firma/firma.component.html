@@ -1,0 +1,193 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <!-- Logo and Brand -->
+    <a class="navbar-brand" href="#">
+      <img src="assets/logo4.png" alt="logo" width="200" height="50" class="d-inline-block align-text-top">
+    </a>
+    <!-- Toggler for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links including tabs and buttons -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- Buttons in Navbar -->
+        <li class="nav-item">
+          <button class="btn btn-success btn-sm ms-2" type="button" onclick="location.href='/promenaLozinke'">Promeni lozinku</button>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger btn-sm ms-2" type="button" (click)="logout()">Izloguj se</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container mt-5" *ngIf="firma">
+  <div class="card shadow-lg border-0 rounded">
+    <div class="card-header bg-success text-white">
+      <h2 class="mb-0">{{ firma.naziv }}</h2>
+    </div>
+    <div class="card-body">
+      <!-- Address -->
+      <p class="lead"><strong>Adresa:</strong> {{ firma.adresa }}</p>
+
+      <!-- Usluge Section -->
+      <h4 class="mt-4">Usluge</h4>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let usluga of firma.usluge" class="list-group-item d-flex justify-content-between align-items-center">
+          <span>{{ usluga.naziv }}</span>
+          <span class="badge bg-dark rounded-pill">{{ usluga.cena }} RSD</span>
+        </li>
+      </ul>
+
+      <!-- Contact Section -->
+      <p class="lead mt-4">
+        <strong>Kontakt telefon:</strong>
+        <span class="text-muted"> {{ firma.kontakt }}</span>
+      </p>
+
+      <!-- Back Button -->
+      <button class="btn btn-secondary mt-4" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i> Nazad
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-5 mb-5">
+  <h2 class="mb-4 text-center">Zakazivanje uređenja bašte</h2>
+
+  <form #form="ngForm">
+    <!-- Step 1: Date & Time, Total Area, Type of Garden -->
+    <div>
+      <h5 class="mb-4">Detalji o zakazivanju</h5>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="date" class="form-label">Datum i vreme dolaska majstora</label>
+          <input type="datetime-local" id="date" class="form-control" [(ngModel)]="zakazivanje.datumPocetka" name="dateTime" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="area" class="form-label">Ukupna kvadratura bašte (u m²)</label>
+          <input type="number" id="area" class="form-control" [(ngModel)]="zakazivanje.kvadratura" name="area" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="gardenType" class="form-label">Tip bašte</label>
+        <select id="gardenType" class="form-select" [(ngModel)]="zakazivanje.tipBaste" name="gardenType" required>
+          <option value="privatna">Privatna bašta</option>
+          <option value="restoran">Bašta restorana</option>
+        </select>
+      </div>
+
+      <button class="btn btn-success w-100" *ngIf="currentStep === 1" (click)="nextStep()">Sledeći korak</button>
+    </div>
+
+    <!-- Step 2: Specific Details Based on Garden Type -->
+    <div *ngIf="currentStep === 2">
+      <h5 class="mb-4">Detalji bašte</h5>
+
+      <!-- For private gardens -->
+      <div *ngIf="zakazivanje.tipBaste === 'privatna'">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="poolArea" class="form-label">Kvadratura pod bazenom</label>
+            <input type="number" id="poolArea" class="form-control" [(ngModel)]="zakazivanje.bazenK" name="poolArea">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="greenArea" class="form-label">Kvadratura pod zelenilom</label>
+            <input type="number" id="greenArea" class="form-control" [(ngModel)]="zakazivanje.zeleniloK" name="greenArea">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="seatingArea" class="form-label">Kvadratura sa ležaljkama/stolovima</label>
+            <input type="number" id="seatingArea" class="form-control" [(ngModel)]="zakazivanje.namestajK" name="seatingArea">
+          </div>
+        </div>
+      </div>
+
+      <!-- For restaurant gardens -->
+      <div *ngIf="zakazivanje.tipBaste === 'restoran'">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="fountainArea" class="form-label">Kvadratura pod fontanom</label>
+            <input type="number" id="fountainArea" class="form-control" [(ngModel)]="zakazivanje.fontanaK" name="fountainArea">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="restaurantGreenArea" class="form-label">Kvadratura pod zelenilom</label>
+            <input type="number" id="restaurantGreenArea" class="form-control" [(ngModel)]="zakazivanje.zeleniloK" name="restaurantGreenArea">
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <label for="tables" class="form-label">Broj stolova</label>
+            <input type="number" id="tables" class="form-control" [(ngModel)]="zakazivanje.stolovi" name="tables">
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <label for="chairs" class="form-label">Broj stolica</label>
+            <input type="number" id="chairs" class="form-control" [(ngModel)]="zakazivanje.stolice" name="chairs">
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional requests -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Dodatni zahtevi</label>
+        <textarea class="form-control" id="description" name="zahtevi" [(ngModel)]="zakazivanje.dodatniZahtevi" rows="3" placeholder="Unesite dodatne zahteve"></textarea>
+      </div>
+
+      <!-- Checkboxes for additional services -->
+      <div class="mb-3">
+        <label for="services" class="form-label">Izaberite dodatne usluge:</label>
+        <div *ngIf="usluge.length > 0">
+          <div *ngFor="let usluga of usluge">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="usluga.naziv" [value]="usluga" (change)="onUslugaChange($event, usluga)">
+              <label class="form-check-label" for="usluga.naziv">
+                {{ usluga.naziv }} - {{ usluga.cena }} RSD
+              </label>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="usluge.length === 0" class="text-danger">
+          Nema dodatnih usluga.
+        </div>
+      </div>
+
+      <div class="container mt-5">
+        <h4>Dodajte fajl sa rasporedom bašte:</h4>
+
+        <!-- File input for JSON upload -->
+        <div class="mb-3">
+          <label for="jsonFile" class="form-label">Upload JSON File</label>
+          <input type="file" id="jsonFile" class="form-control" (change)="onFileSelected($event)">
+        </div>
+
+        <!-- Canvas to display the garden design -->
+        <canvas id="gardenCanvas" width="600" height="400" style="border:1px solid #000"></canvas>
+      </div>
+
+
+      <!-- Buttons for navigation between steps -->
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="previousStep()">Nazad</button>
+        <button class="btn btn-success" (click)="submitReservation()">Potvrdi zakazivanje</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="error" class="alert alert-danger mt-3">
+  {{ error }}
+</div>
+
+
+

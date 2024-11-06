@@ -1,0 +1,287 @@
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <!-- Logo and Brand -->
+    <a class="navbar-brand" href="#">
+      <img src="assets/logo4.png" alt="logo" width="200" height="50" class="d-inline-block align-text-top">
+    </a>
+    <!-- Toggler for mobile view -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links including tabs and buttons -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarTab" role="tablist">
+        <!-- Tabs in Navbar -->
+        <li class="nav-item">
+          <a class="nav-link active" id="profil-tab" data-bs-toggle="tab" href="#profil" role="tab" aria-controls="profil" aria-selected="true">Profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="firme-tab" data-bs-toggle="tab" href="#firme" role="tab" aria-controls="firme" aria-selected="false">Firme</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="zakazivanja-tab" data-bs-toggle="tab" href="#zakazivanja" role="tab" aria-controls="zakazivanja" aria-selected="false">Zakazivanja</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="odrzavanje-tab" data-bs-toggle="tab" href="#odrzavanje" role="tab" aria-controls="odrzavanje" aria-selected="false">Odrzavanje</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- Buttons in Navbar -->
+        <li class="nav-item">
+          <button class="btn btn-success btn-sm ms-2" type="button" onclick="location.href='/promenaLozinke'">Promeni lozinku</button>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger btn-sm ms-2" type="button" (click)="logout()">Izloguj se</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Tabs Content -->
+<div class="container mt-3">
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="profil" role="tabpanel" aria-labelledby="profil-tab">
+      <div class="container mt-5">
+        <!-- Profile Form Card -->
+        <div class="profile-card mb-4">
+          <h2 class="mb-4">Vaš Profil</h2>
+          <div>
+            <p><img [src]="userData.profilnaSlika"></p>
+            <p><strong>Ime:</strong> {{userData.ime}}</p>
+            <p><strong>Prezime:</strong> {{userData.prezime}}</p>
+            <p><strong>Adresa:</strong> {{userData.adresa}}</p>
+            <p><strong>Email:</strong> {{userData.email}}</p>
+            <p><strong>Kontakt telefon:</strong> {{userData.brojTelefona}}</p>
+            <p><strong>Broj kreditne kartice:</strong> {{userData.brojKreditneKartice}}</p>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal">Ažuriraj</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bootstrap Modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Ažuriraj Profil</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="editProfileForm">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Ime</label>
+                  <input type="text" class="form-control" id="name" name="ime" [(ngModel)]="ime">
+                </div>
+                <div class="mb-3">
+                  <label for="surname" class="form-label">Prezime</label>
+                  <input type="text" class="form-control" id="surname" name="prezime" [(ngModel)]="prezime">
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label">Adresa</label>
+                  <input type="text" class="form-control" id="address" name="adresa" [(ngModel)]="adresa">
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email">
+                  <div class="invalid-feedback">
+                    Unesite validnu email adresu.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Kontakt telefon</label>
+                  <input type="tel" class="form-control" id="phone" name="telefon" [(ngModel)]="telefon">
+                </div>
+                <div class="mb-3">
+                  <label for="creditCard" class="form-label">Broj kreditne kartice</label>
+                  <input type="text" class="form-control" id="creditCard" name="kartica" [(ngModel)]="kartica">
+                  <div class="invalid-feedback">
+                    Unesite validni broj kartice.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="picture" class="form-label">Otpremite sliku</label>
+                  <input type="file" class="form-control" id="picture" (change)="onFileChange($event)">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+              <button type="button" class="btn btn-success" (click)="azuriraj()">Ažuriraj profil</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade" id="firme" role="tabpanel" aria-labelledby="firme-tab">
+      <h1>Firme</h1>
+      <!-- Search form -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Pretraži po nazivu" [(ngModel)]="searchNaziv">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="Pretraži po adresi" [(ngModel)]="searchAdresa">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-success w-100" (click)="search()">Pretraži</button>
+    </div>
+  </div>
+
+  <!-- Firm table with sorting -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th (click)="sortBy('naziv')" [class.active]="sortedBy === 'naziv'">
+          Naziv firme
+          <i *ngIf="sortOrder === 'asc' && sortedBy === 'naziv'" class="bi bi-caret-up-fill"></i>
+          <i *ngIf="sortOrder === 'desc' && sortedBy === 'naziv'" class="bi bi-caret-down-fill"></i>
+        </th>
+        <th (click)="sortBy('adresa')" [class.active]="sortedBy === 'adresa'">
+          Adresa
+          <i *ngIf="sortOrder === 'asc' && sortedBy === 'adresa'" class="bi bi-caret-up-fill"></i>
+          <i *ngIf="sortOrder === 'desc' && sortedBy === 'adresa'" class="bi bi-caret-down-fill"></i>
+        </th>
+        <th>Trenutno angažovani dekorateri</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let firma of filteredFirme">
+        <td (click)="selectFirm(firma)">
+          <span>{{ firma.naziv }}</span>
+          <div *ngIf="selectedFirm === firma">
+            <!-- Show the "Detaljnije" link only for the selected firm -->
+            <a (click)="goToDetails(firma)" class="text-primary" style="cursor: pointer;">Detaljnije</a>
+          </div>
+        </td>
+        <td>{{ firma.adresa }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let dekorater of firma.dekorateriDetails">{{ dekorater?.ime }} {{ dekorater?.prezime }}</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+
+
+    <div class="tab-pane fade" id="zakazivanja" role="tabpanel" aria-labelledby="zakazivanja-tab">
+      <div class="container mt-5">
+        <div class="card shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h2 class="mb-0">Trenutna Zakazivanja</h2>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">Datum Zakazivanja</th>
+                  <th scope="col">Datum Izrade Posla</th>
+                  <th scope="col">Naziv Firme</th>
+                  <th scope="col">Tražene Usluge</th>
+                  <th scope="col">Akcija</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let zakazivanje of zakazivanja">
+                  <td>{{ zakazivanje.datumZakazivanja | date: 'dd.MM.yyyy' }}</td>
+                  <td>{{ zakazivanje.datumPocetka | date: 'dd.MM.yyyy' }}</td>
+                  <td>{{ zakazivanje.nazivFirme }}</td>
+                  <td>
+                    <ul class="list-unstyled mb-0">
+                      <li *ngFor="let usluga of zakazivanje.usluge" class="badge bg-success me-1">{{ usluga.naziv }}</li>
+                    </ul>
+                  </td>
+                  <td>
+                    <button *ngIf="isCancelButtonVisible(zakazivanje.datumPocetka!)" class="btn btn-danger btn-sm" (click)="cancelZakazivanje(zakazivanje)">Otkaži</button>
+                  </td>
+                </tr>
+                <tr *ngIf="zakazivanja.length === 0">
+                  <td colspan="4" class="text-center">Trenutno nema zakazivanja.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="tab-pane fade" id="odrzavanje" role="tabpanel" aria-labelledby="odrzavanje-tab">
+
+      <div class="container mt-5">
+        <div class="card shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h2 class="mb-0">Zavrsevi poslovi</h2>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">Datum Završetka</th>
+                  <th scope="col">Broj Bazena/Fontana</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let basta of filteredBaste">
+                  <td>{{ basta.datumZavrsetka | date: 'dd.MM.yyyy' }}</td>
+                    <td>{{ (basta.bazenK > 0 || basta.fontanaK > 0) ? 1 : 0 }}</td>
+                  <td>
+                    <button *ngIf="showServisButton(basta)" class="btn btn-warning btn-sm" (click)="zakaziOdrzavanje(basta)">
+                      Zakaži Odrzavanje
+                    </button>
+                    <span *ngIf="!showServisButton(basta)" class="text-muted">Nije potreban servis</span>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredBaste.length === 0">
+                  <td colspan="3" class="text-center">Trenutno nema završenih poslova.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-5">
+        <div class="card shadow-sm">
+          <div class="card-header bg-warning text-white">
+            <h2 class="mb-0">U procesu</h2>
+          </div>
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">Datum Završetka</th>
+                  <th scope="col">Broj Bazena/Fontana</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let basta of basteUprocesu">
+                  <td>{{ basta.datumZavrsetka | date: 'dd.MM.yyyy' }}</td>
+                  <td>{{ (basta.bazenK > 0 || basta.fontanaK > 0) ? 1 : 0 }}</td>
+                </tr>
+                <tr *ngIf="basteUprocesu.length === 0">
+                  <td colspan="3" class="text-center">Trenutno nema poslova u procesu odrzavanja.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+</body>

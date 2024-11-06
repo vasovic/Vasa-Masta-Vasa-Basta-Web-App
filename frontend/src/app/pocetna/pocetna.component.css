@@ -1,0 +1,26 @@
+/* Section Title */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Divider Under Section Title */
+.divider {
+  width: 80px;
+  height: 4px;
+  background-color: #155724;
+  border-radius: 2px;
+}
+
+/* Card Hover Effect */
+.hover-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-effect:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}

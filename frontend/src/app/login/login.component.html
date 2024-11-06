@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="">
+      <img src="assets/logo4.png" alt="logo"  width="200" height="50" class="d-inline-block align-text-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Ulogujte se
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="username" class="form-label">Korisničko ime</label>
+              <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" placeholder="Unesite korisničko ime">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Lozinka</label>
+              <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" placeholder="Unesite lozinku">
+            </div>
+            <button type="submit" class="btn btn-success" (click)="login()">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+</div>

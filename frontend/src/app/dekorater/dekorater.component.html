@@ -1,0 +1,419 @@
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <!-- Logo and Brand -->
+      <a class="navbar-brand" href="#">
+        <img src="assets/logo4.png" alt="logo" width="200" height="50" class="d-inline-block align-text-top">
+      </a>
+      <!-- Toggler for mobile view -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Navbar links including tabs and buttons -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarTab" role="tablist">
+          <!-- Tabs in Navbar -->
+          <li class="nav-item">
+            <a class="nav-link active" id="profil-tab" data-bs-toggle="tab" href="#profil" role="tab" aria-controls="profil" aria-selected="true">Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="zakazivanja-tab" data-bs-toggle="tab" href="#zakazivanja" role="tab" aria-controls="zakazivanja" aria-selected="false">Zakazivanja</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="odrzavanje-tab" data-bs-toggle="tab" href="#odrzavanje" role="tab" aria-controls="odrzavanje" aria-selected="false">Odrzavanja</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="firme-tab" data-bs-toggle="tab" href="#firme" role="tab" aria-controls="firme" aria-selected="false">Statistika</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <!-- Buttons in Navbar -->
+          <li class="nav-item">
+            <button class="btn btn-success btn-sm ms-2" type="button" onclick="location.href='/promenaLozinke'">Promeni lozinku</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-danger btn-sm ms-2" type="button" (click)="logout()">Izloguj se</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Tabs Content -->
+  <div class="container mt-3">
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="profil" role="tabpanel" aria-labelledby="profil-tab">
+
+        <div class="container mt-5">
+          <!-- Profile Form Card -->
+          <div class="profile-card mb-4">
+            <h2 class="mb-4">Vaš Profil</h2>
+            <div>
+              <p><img [src]="userData.profilnaSlika"></p>
+              <p><strong>Ime:</strong> {{userData.ime}}</p>
+              <p><strong>Prezime:</strong> {{userData.prezime}}</p>
+              <p><strong>Adresa:</strong> {{userData.adresa}}</p>
+              <p><strong>Email:</strong> {{userData.email}}</p>
+              <p><strong>Kontakt telefon:</strong> {{userData.brojTelefona}}</p>
+              <p><strong>Broj kreditne kartice:</strong> {{userData.brojKreditneKartice}}</p>
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal">Ažuriraj</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bootstrap Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Ažuriraj Profil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="editProfileForm">
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Ime</label>
+                    <input type="text" class="form-control" id="name" name="ime" [(ngModel)]="ime">
+                  </div>
+                  <div class="mb-3">
+                    <label for="surname" class="form-label">Prezime</label>
+                    <input type="text" class="form-control" id="surname" name="prezime" [(ngModel)]="prezime">
+                  </div>
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Adresa</label>
+                    <input type="text" class="form-control" id="address" name="adresa" [(ngModel)]="adresa">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email">
+                    <div class="invalid-feedback">
+                      Unesite validnu email adresu.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Kontakt telefon</label>
+                    <input type="tel" class="form-control" id="phone" name="telefon" [(ngModel)]="telefon">
+                  </div>
+                  <div class="mb-3">
+                    <label for="creditCard" class="form-label">Broj kreditne kartice</label>
+                    <input type="text" class="form-control" id="creditCard" name="kartica" [(ngModel)]="kartica">
+                    <div class="invalid-feedback">
+                      Unesite validni broj kartice.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="picture" class="form-label">Otpremite sliku</label>
+                    <input type="file" class="form-control" id="picture" (change)="onFileChange($event)">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-success" (click)="azuriraj()">Ažuriraj profil</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="firme" role="tabpanel" aria-labelledby="firme-tab">
+
+
+        <div class="container mt-5 mb-5">
+          <h2 class="text-center mb-4">Statistika Poslova</h2>
+
+          <div class="row">
+            <!-- Bar Chart for Job Counts by Month -->
+            <div class="col-lg-6">
+              <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                  <h4 class="mb-0">Broj Poslova po Mesecima</h4>
+                </div>
+                <div class="card-body" *ngIf="chartOptions?.series?.length">
+                  <apx-chart
+                    [series]="chartOptions.series"
+                    [chart]="chartOptions.chart"
+                    [title]="chartOptions.title"
+                    [xaxis]="chartOptions.xaxis"
+                    [plotOptions]="chartOptions.plotOptions"
+                    [dataLabels]="chartOptions.dataLabels"
+                  ></apx-chart>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart for Job Distribution among Decorators -->
+            <div class="col-lg-6">
+              <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                  <h4 class="mb-0">Raspodela Poslova među Dekoraterima</h4>
+                </div>
+                <div class="card-body">
+                  <apx-chart
+                    [series]="pieChartOptions.series"
+                    [chart]="pieChartOptions.chart"
+                    [title]="pieChartOptions.title"
+                    [labels]="pieChartOptions.labels"
+                    [dataLabels]="pieChartOptions.dataLabels"
+                  ></apx-chart>
+                </div>
+              </div>
+            </div>
+
+            <!-- Histogram for Average Monthly Jobs by Day of the Week -->
+            <div class="col-lg-12">
+              <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                  <h4 class="mb-0">Prosečan Mesečni Broj Poslova po Danima u Nedelji</h4>
+                </div>
+                <div class="card-body">
+                  <apx-chart
+                    [series]="histogramChartOptions.series"
+                    [chart]="histogramChartOptions.chart"
+                    [title]="histogramChartOptions.title"
+                    [xaxis]="histogramChartOptions.xaxis"
+                    [plotOptions]="histogramChartOptions.plotOptions"
+                    [dataLabels]="histogramChartOptions.dataLabels"
+                  ></apx-chart>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+      <div class="tab-pane fade" id="zakazivanja" role="tabpanel" aria-labelledby="zakazivanja-tab">
+
+          <div class="container mt-5">
+            <div class="card shadow-sm">
+              <div class="card-header bg-warning text-white">
+                <h2 class="mb-0">Neobrađena Zakazivanja</h2>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle">
+                    <thead class="table-dark text-center">
+                      <tr>
+                        <th scope="col">Datum Zakazivanja</th>
+                        <th scope="col">Datum Izrade Posla</th>
+                        <th scope="col">Klijent</th>
+                        <th scope="col">Tip bašte</th>
+                        <th scope="col">Tražene Usluge</th>
+                        <th scope="col">Kvadratura bašte</th>
+                        <th scope="col">Kvadratura zelenila</th>
+                        <th scope="col">Kvadratura bazena</th>
+                        <th scope="col">Kvadratura povrsine za odmaranje</th>
+                        <th scope="col">Kvadratura fontane</th>
+                        <th scope="col">Broj stolova</th>
+                        <th scope="col">Broj stolica</th>
+                        <th scope="col">Dodatni zahtevi</th>
+                        <th scope="col">Akcije</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let zakazivanje of neobradjenaZakazivanja" class="text-center">
+                        <td>{{ zakazivanje.datumZakazivanja | date: 'dd.MM.yyyy' }}</td>
+                        <td>{{ zakazivanje.datumPocetka | date: 'dd.MM.yyyy' }}</td>
+                        <td>{{ zakazivanje.vlasnik }}</td>
+                        <td>{{ zakazivanje.tipBaste }}</td>
+                        <td>
+                          <ul class="list-unstyled mb-0">
+                            <li *ngFor="let usluga of zakazivanje.usluge" class="badge bg-info text-dark me-1">{{ usluga.naziv }}</li>
+                          </ul>
+                        </td>
+                        <td>{{ zakazivanje.kvadratura }}</td>
+                        <td>{{ zakazivanje.zeleniloK }}</td>
+                        <td>{{ zakazivanje.bazenK }}</td>
+                        <td>{{ zakazivanje.namestajK }}</td>
+                        <td>{{ zakazivanje.fontanaK }}</td>
+                        <td>{{ zakazivanje.stolovi }}</td>
+                        <td>{{ zakazivanje.stolice }}</td>
+                        <td>{{ zakazivanje.dodatniZahtevi }}</td>
+                        <td>
+                          <button class="btn btn-success btn-sm me-2" (click)="potvrdiZakazivanje(zakazivanje)">Potvrdi</button>
+                          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#odbijModal" (click)="setSelectedZakazivanje(zakazivanje)">Odbij</button>
+                        </td>
+                      </tr>
+                      <tr *ngIf="neobradjenaZakazivanja.length === 0">
+                        <td colspan="14" class="text-center">Trenutno nema neobrađenih zakazivanja.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Bootstrap Modal -->
+            <div class="modal fade" id="odbijModal" tabindex="-1" aria-labelledby="odbijModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="odbijModalLabel">Odbijanje Zakazivanja</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="komentar" class="form-label">Komentar za Odbijanje</label>
+                        <textarea class="form-control" id="komentar" [(ngModel)]="komentarOdbijanja" name="komentar" rows="3" required></textarea>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                    <button type="button" class="btn btn-success" (click)="odbijZakazivanje()">Odbij posao</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+
+          <div class="container mt-5 mb-5">
+            <div class="card shadow-sm">
+              <div class="card-header bg-success text-white">
+                <h2 class="mb-0">Moji Poslovi</h2>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle">
+                    <thead class="table-dark text-center">
+                      <tr>
+                        <th scope="col">Datum Zakazivanja</th>
+                        <th scope="col">Datum Izrade Posla</th>
+                        <th scope="col">Klijent</th>
+                        <th scope="col">Tip bašte</th>
+                        <th scope="col">Tražene Usluge</th>
+                        <th scope="col">Kvadratura bašte</th>
+                        <th scope="col">Kvadratura zelenila</th>
+                        <th scope="col">Kvadratura bazena</th>
+                        <th scope="col">Kvadratura povrsine za odmaranje</th>
+                        <th scope="col">Kvadratura fontane</th>
+                        <th scope="col">Broj stolova</th>
+                        <th scope="col">Broj stolica</th>
+                        <th scope="col">Dodatni zahtevi</th>
+                        <th scope="col">Akcije</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let zakazivanje of mojaZakazivanja" class="text-center">
+                        <td>{{ zakazivanje.datumZakazivanja | date: 'dd.MM.yyyy' }}</td>
+                        <td>{{ zakazivanje.datumPocetka | date: 'dd.MM.yyyy' }}</td>
+                        <td>{{ zakazivanje.vlasnik }}</td>
+                        <td>{{ zakazivanje.tipBaste }}</td>
+                        <td>
+                          <ul class="list-unstyled mb-0">
+                            <li *ngFor="let usluga of zakazivanje.usluge" class="badge bg-info text-dark me-1">{{ usluga.naziv }}</li>
+                          </ul>
+                        </td>
+                        <td>{{ zakazivanje.kvadratura }}</td>
+                        <td>{{ zakazivanje.zeleniloK }}</td>
+                        <td>{{ zakazivanje.bazenK }}</td>
+                        <td>{{ zakazivanje.namestajK }}</td>
+                        <td>{{ zakazivanje.fontanaK }}</td>
+                        <td>{{ zakazivanje.stolovi }}</td>
+                        <td>{{ zakazivanje.stolice }}</td>
+                        <td>{{ zakazivanje.dodatniZahtevi }}</td>
+                        <td>
+                          <button class="btn btn-success btn-sm me-2" (click)="zavrsiPosao(zakazivanje)">Zavrsi Posao</button>
+                        </td>
+                      </tr>
+                      <tr *ngIf="mojaZakazivanja.length === 0">
+                        <td colspan="14" class="text-center">Trenutno nema mojih poslova.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+      </div>
+
+
+      <div class="tab-pane fade" id="odrzavanje" role="tabpanel" aria-labelledby="odrzavanje-tab">
+
+        <div class="container mt-5 mb-5">
+          <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+              <h2 class="mb-0">Zahtevi za Održavanje</h2>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead class="table-dark text-center">
+                    <tr>
+                      <th scope="col">Klijent</th>
+                      <th scope="col">Tip bašte</th>
+                      <th scope="col">Kvadratura</th>
+                      <th scope="col">Akcije</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let odrzavanje of zahteviZaOdrzavanje" class="text-center">
+                      <td>{{ odrzavanje.vlasnik }}</td>
+                      <td>{{ odrzavanje.tipBaste }}</td>
+                      <td>{{ odrzavanje.kvadratura }}</td>
+                      <td>
+                        <button class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#potvrdiModal" (click)="setSelectedOdrzavanje(odrzavanje)">
+                          Potvrdi
+                        </button>
+                        <button class="btn btn-danger btn-sm ms-2" (click)="odbijOdrzavanje(odrzavanje)">Odbij</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="zahteviZaOdrzavanje.length === 0">
+                      <td colspan="4" class="text-center">Trenutno nema zahteva za održavanje.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal for confirming estimated completion date/time -->
+        <div class="modal fade" id="potvrdiModal" tabindex="-1" aria-labelledby="potvrdiModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="potvrdiModalLabel">Unesite vreme završetka održavanja</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="vremeZavrsetka">Procenjeno vreme završetka</label>
+                  <input type="datetime-local" id="vremeZavrsetka" [(ngModel)]="procVremeZavrsetka" class="form-control">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-success" (click)="potvrdiOdrzavanje()">Potvrdi</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+
+
